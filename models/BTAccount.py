@@ -1,7 +1,3 @@
-from ui.new_account import Ui_FormNewAccount
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtGui import QRegExpValidator
-from PyQt5.QtCore import QRegExp
 import pyotp
 from BTErrorManager import *
 from datetime import datetime

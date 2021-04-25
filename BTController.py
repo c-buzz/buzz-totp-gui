@@ -1,25 +1,11 @@
 from BTSettings import BTSettings
 import os
-import sys
-from typing import Union, final
-
-import pyotp
-from PyQt5 import QtCore
-from PyQt5.QtCore import QSettings, QStandardPaths, Qt, pyqtSignal
-from PyQt5.QtWidgets import QApplication, QDialogButtonBox, QFileDialog
-
-import BTUtils as utils
+from typing import Union
 from BTSettings import BTSettings
 from BTErrorManager import bt_raise_error
 from BTProfile import BTProfileController
 from views.InputPasswordView import BTInputPasswordView
 from views.ProfileLoaderView import BTProfileLoaderView
-
-app = QApplication(sys.argv)
-
-app.setApplicationName('BuzzTOTP')
-app.setApplicationVersion('0.0.1')
-QSettings.setDefaultFormat(QSettings.Format.IniFormat)
 
 class BTController(object):
     profile_loader = BTProfileLoaderView()
