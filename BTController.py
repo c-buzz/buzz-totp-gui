@@ -8,11 +8,13 @@ from views.InputPasswordView import BTInputPasswordView
 from views.ProfileLoaderView import BTProfileLoaderView
 
 class BTController(object):
-    profile_loader = BTProfileLoaderView()
-    password_handler = BTInputPasswordView()
-    __currentProfile : BTProfileController = None
-    settings = BTSettings()
+
+    
     def __init__(self) -> None:
+        self.settings = BTSettings()
+        self.profile_loader = BTProfileLoaderView()
+        self.password_handler = BTInputPasswordView()
+        self.__currentProfile : BTProfileController = None
         self.profile_loader.signalLoadProfileResult.connect(self.onProfileLoaded)
         lp = self.load_last_profile()
         if lp:

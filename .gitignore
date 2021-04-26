@@ -1,2 +1,9 @@
 /**/__pycache__
 /buzztotp
+/dist
+/build
+BuzzTOTP.spec
+setup.py
+test.py
+main.spec
+
