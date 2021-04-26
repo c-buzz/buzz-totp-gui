@@ -4,6 +4,6 @@
 /build
 BuzzTOTP.spec
 setup.py
-test.py
 main.spec
+test.py
 
