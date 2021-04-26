@@ -3,7 +3,7 @@ Gui Application for TOTP accounts management
 
 # Overview
 The application manages the creation of Profiles that stories a list of TOTP Account.
-Each profile is stored in an encrypted (EAS-256) file *.bt
+Each profile is stored in an encrypted (AES-256) file *.bt
 An account contains the following set of information:
 - Name
 - Secret
