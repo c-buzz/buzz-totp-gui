@@ -43,6 +43,7 @@ class BTController(object):
     def onProfileLoaded(self, profile_ctr : BTProfileController):
         if profile_ctr:
             self.current_profile = profile_ctr
+            # FIXME --> When closing profile after changes, the application does not quit
             self.profile_loader.close()
         else:
             if self.current_profile:

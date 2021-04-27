@@ -1,6 +1,6 @@
 /**/__pycache__
 /buzztotp
-/dist
+#/dist
 /build
 BuzzTOTP.spec
 setup.py
