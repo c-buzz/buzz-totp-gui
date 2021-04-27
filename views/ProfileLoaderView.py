@@ -30,11 +30,9 @@ class BTProfileLoaderView(QDialogButtonBox):
                 try:
                     profile = BTProfileController(filename, password)
                 except FileNotFoundError as e:
-                    bt_raise_error(e)
-                except ValueError as e:
-                    bt_raise_error('The file seems corrupted. Exception raised:\n' + e)
+                    bt_raise_error(e.strerror())
                 except:
-                    bt_raise_error('Credentials are not valid')
+                    bt_raise_error('Credentials are not valid or profile file corrupted')
                 finally:
                     self.signalLoadProfileResult.emit(profile)
     
