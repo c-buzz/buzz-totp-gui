@@ -15,7 +15,10 @@ class BTController(object):
         self.profile_loader = BTProfileLoaderView()
         self.password_handler = BTInputPasswordView()
         self.__currentProfile : BTProfileController = None
+
+        # Notify the controller of the result of a new loading 
         self.profile_loader.signalLoadProfileResult.connect(self.onProfileLoaded)
+        
         lp = self.load_last_profile()
         if lp:
             self.current_profile = lp
@@ -34,6 +37,7 @@ class BTController(object):
 
         self.__currentProfile = profile
         self.__currentProfile.actionChangeProfile.triggered.connect(self.onChangeProfile)
+        
         self.__currentProfile.show()
 
     def onProfileLoaded(self, profile_ctr : BTProfileController):
@@ -57,4 +61,5 @@ class BTController(object):
         return False
 
     def onChangeProfile(self):
+        # FIXME: If wrong password input, error arise. Manage the Exception
         self.profile_loader.show()

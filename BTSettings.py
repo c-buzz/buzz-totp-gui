@@ -1,3 +1,4 @@
+from genericpath import isfile
 import os
 import os.path
 from BTErrorManager import *
@@ -38,7 +39,9 @@ class BTSettings(QSettings):
 
     @property
     def last_profile(self) -> str:
-        v = self.value('lastProfile', type=str)
+        current = self.value('lastProfile', type=str)
+        if current and not (os.path.exists(current) and os.path.isfile(current)):
+            self.last_profile = ''
         return self.value('lastProfile', type=str)
 
     @last_profile.setter

@@ -178,3 +178,8 @@ class BTProfileController(ProfileMainWindow):
             event.accept()
         else:
             event.ignore()
+
+    def show(self) -> None:
+        # Update the settings with last profile
+        self.settings.last_profile = self.accounts_model.filename
+        return super().show()
