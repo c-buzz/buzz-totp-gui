@@ -51,6 +51,7 @@ class BTController(object):
     def load_last_profile(self) -> Union[bool, BTProfileController]:
         last_profile = self.settings.last_profile
         if os.path.exists(last_profile) and os.path.isfile(last_profile):
+            # FIXME --> Adjust message indentation
             message = f'Last profile opened detected:\n\
                 {last_profile}\n\
                 Type the password for it to be opened or close whit window to choose another profile'
