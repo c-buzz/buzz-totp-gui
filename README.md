@@ -1,4 +1,4 @@
-# TOTP Qt Gui - buzz-totp-gui
+# 2-Factor Authentication TOTP Qt Gui - buzz-totp-gui
 Gui Application for TOTP accounts management
 
 # Overview
