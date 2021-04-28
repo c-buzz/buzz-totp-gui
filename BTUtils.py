@@ -1,5 +1,7 @@
-# AES 256 encryption/decryption using pycryptodome library
+# AES 256 encryption/decryption using pycryptodomex library
 import json
+import os
+from models.ProfileAccountsModel import ProfileAccountsModel
 from typing import List, Union
 
 import pyotp
@@ -123,6 +125,15 @@ def validate_password(password : str):
                     #.has().symbols()
                     #.has().uppercase()\
     return bt_password_validator.validate(password)
+
+def checkPassword(filename, password) -> bool:
+    if not(os.path.exists(filename) and os.path.isfile(filename)):
+        return False
+    try:
+        m = ProfileAccountsModel(filename,password)
+        return True
+    except:
+        return False
 
 digest_table = {
     "SHA-1" : hashlib.sha1,

@@ -30,6 +30,9 @@ class ProfileAccountsModel(QAbstractListModel):
             self.write_to_file(filename)
         self.filename = os.path.abspath(filename)
 
+    def setPassword(self, password : str):
+        self.__password = password
+
     def data(self, index:QModelIndex, role:int=Qt.ItemDataRole.DisplayRole):
         if index.isValid():
 

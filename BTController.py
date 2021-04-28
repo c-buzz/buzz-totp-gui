@@ -8,8 +8,6 @@ from views.InputPasswordView import BTInputPasswordView
 from views.ProfileLoaderView import BTProfileLoaderView
 
 class BTController(object):
-
-    
     def __init__(self) -> None:
         self.settings = BTSettings()
         self.profile_loader = BTProfileLoaderView()
@@ -57,7 +55,7 @@ class BTController(object):
                 {last_profile}\n\
                 Type the password for it to be opened or close whit window to choose another profile'
             self.password_handler.profile_check = last_profile
-            password = self.password_handler.input(message)
+            password = self.password_handler.prompt(message)
             if password:
                 return BTProfileController(last_profile, password)
         return False

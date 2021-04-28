@@ -1,7 +1,6 @@
-from BTProfile import BTProfileController
+#from BTProfile import BTProfileController
 from typing import Union
 from ui.BTDialogInputPassword import Ui_PasswordInputDialog
-#from ..ui.BTDialogInputPassword import Ui_PasswordInputDialog
 from BTErrorManager import bt_raise_error
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QDialog, QLineEdit
@@ -12,7 +11,7 @@ class BTInputPasswordView(Ui_PasswordInputDialog, QDialog):
         super().__init__()
         self.setupUi(self)
         self.__password = ''
-        self.show_hide_password('hide')
+        
         self.buttonShowHidePassword.clicked.connect(self.show_hide_password)
         if message:
             self.labelMessage.setText(message)
@@ -20,6 +19,9 @@ class BTInputPasswordView(Ui_PasswordInputDialog, QDialog):
             self.labelMessage.hide()
         
         self.profile_check = None if (profile_check is None or profile_check == '') else profile_check
+        self.icon_visible_password = QIcon(QPixmap('ui/icon/pwd_show.png'))
+        self.icon_hidden_password = QIcon(QPixmap('ui/icon/pwd_hide.png'))
+        self.show_hide_password('hide')
 
     def show_hide_password(self, force):
         if force == 'hide':
@@ -28,14 +30,11 @@ class BTInputPasswordView(Ui_PasswordInputDialog, QDialog):
             show = True
         else:
             show = self.editPassword.echoMode() == QLineEdit.EchoMode.Password
-        icon = QIcon()
         if show:
-            icon.addPixmap(QPixmap('ui/icon/pwd_hide.png'))
-            self.buttonShowHidePassword.setIcon(icon)
             self.editPassword.setEchoMode(QLineEdit.EchoMode.Normal)
+            self.buttonShowHidePassword.setIcon(self.icon_hidden_password)
         else:
-            icon.addPixmap(QPixmap('ui/icon/pwd_show.png'))
-            self.buttonShowHidePassword.setIcon(icon)
+            self.buttonShowHidePassword.setIcon(self.icon_visible_password)
             self.editPassword.setEchoMode(QLineEdit.EchoMode.Password)
 
     def accept(self) -> None:
@@ -44,15 +43,14 @@ class BTInputPasswordView(Ui_PasswordInputDialog, QDialog):
         if not utils.validate_password(pwd):
             valid = False
         elif self.profile_check is not None:
-            valid = BTProfileController.checkPassword(self.profile_check, pwd)
-        
+            valid = utils.checkPassword(self.profile_check, pwd)
         if valid:
             self.__password = pwd
             super().accept()
         else:
             bt_raise_error('Password not valid')
 
-    def input(self, message : str = '', profile_name : str = '') -> Union[str, BTProfileController]:
+    def prompt(self, message : str = '') -> str:
         if message:
             self.labelMessage.setText(message)
             self.labelMessage.show()

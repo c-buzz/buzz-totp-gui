@@ -1,3 +1,4 @@
+from views.InputPasswordView import BTInputPasswordView
 from BTSettings import BTSettings
 import os
 import time
@@ -20,12 +21,13 @@ class BTProfileController(ProfileMainWindow):
     
     def __init__(self, filename, password):
         self.__accounts_list : List[BTAccount] = []
-        self.__password = ''
         self.accounts_model = ProfileAccountsModel(filename, password)
         self.new_account_handler = NewAccountWindow()
         super().__init__(self.accounts_model)
         self.baseTitle = "BuzzTotp - " + os.path.basename(filename)
         self.setWindowTitle(self.baseTitle)
+
+        self.name = os.path.basename(filename)
 
         # Load settings from app
         self.settings = BTSettings()
@@ -44,15 +46,6 @@ class BTProfileController(ProfileMainWindow):
         self.settings.auto_hide_totp = self.actionAutoTOTPHide.isChecked()
         self.settings.sync()
         
-    def checkPassword(filename, password) -> bool:
-        if not(os.path.exists(filename) and os.path.isfile(filename)):
-            return False
-        try:
-            m = ProfileAccountsModel(filename,password)
-            return True
-        except:
-            return False
-
     def deleteAccount(self):
         if bt_ask_for_confirm('An account is being deleted') == QMessageBox.StandardButton.Yes:
             account = super().deleteAccount()
@@ -183,3 +176,14 @@ class BTProfileController(ProfileMainWindow):
         # Update the settings with last profile
         self.settings.last_profile = self.accounts_model.filename
         return super().show()
+
+    def onChangePassword(self) -> None:
+        password_dialog = BTInputPasswordView()
+        password = password_dialog.prompt('Choose new password for profile ' + self.name)
+        if password:
+            confirm = QMessageBox.warning(self, "Password change",
+                'The password of the current profile is being changed.\nAny pending editing will be saved. Continue?',
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            if confirm == QMessageBox.StandardButton.Yes:
+                self.accounts_model.setPassword(password)
+                self.accounts_model.write_to_file()

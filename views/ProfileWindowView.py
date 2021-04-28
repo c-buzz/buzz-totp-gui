@@ -20,6 +20,7 @@ class ProfileMainWindow(Ui_ProfileMainWindow, QMainWindow):
         self.actionDeleteAccount.triggered.connect(self.deleteAccount)
         self.actionAddAccount.triggered.connect(self.addAccount)
         self.actionRenameAccount.triggered.connect(self.onActionRenameAccount)
+        self.actionChangePassword.triggered.connect(self.onChangePassword)
         self.listProfiles.addAction(self.actionAddAccount)
         self.listProfiles.addAction(self.actionRenameAccount)
         self.listProfiles.addAction(self.actionDeleteAccount)
@@ -110,4 +111,8 @@ class ProfileMainWindow(Ui_ProfileMainWindow, QMainWindow):
                 self.buttonShowTOTP.setText("Hide TOTP")
             else:
                 self.buttonShowTOTP.setText("Show TOTP")
+
+    def onChangePassword(self):
+        # To be reimplemented
+        return
  
